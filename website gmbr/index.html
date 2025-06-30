@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Librarian | Digital Knowledge Hub</title>
+    <link rel="stylesheet" href="stylesheets.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light theme variables */
+            --primary-light: #4e54c8;
+            --secondary-light: #8f94fb;
+            --background-light: #f0f4f8;
+            --card-light: #ffffff;
+            --text-light: #333333;
+            --accent-light: #00c9a7;
+            --border-light: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark theme variables */
+            --primary-dark: #6a11cb;
+            --secondary-dark: #2575fc;
+            --background-dark: #121212;
+            --card-dark: #1e1e1e;
+            --text-dark: #f0f0f0;
+            --accent-dark: #00d4ff;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            
+            /* Common */
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--background-light);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode {
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--box-shadow) var(--shadow-light);
+        }
+
+        body.dark-mode header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            box-shadow: var(--box-shadow) var(--shadow-dark);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .theme-toggle, .lang-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .theme-toggle:hover, .lang-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--card-light);
+            padding: 1rem;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            position: sticky;
+            top: 80px;
+            z-index: 999;
+        }
+
+        body.dark-mode nav {
+            background: var(--card-dark);
+            box-shadow: 0 4px 10px var(--shadow-dark);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: var(--background-light);
+            border: 2px solid var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 10px 20px;
+            color: var(--primary-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--primary-light);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        body.dark-mode .nav-btn {
+            background: var(--background-dark);
+            border-color: var(--primary-dark);
+            color: var(--accent-dark);
+        }
+
+        body.dark-mode .nav-btn:hover, 
+        body.dark-mode .nav-btn.active {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: var(--card-light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow) var(--shadow-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body.dark-mode .section {
+            background: var(--card-dark);
+            box-shadow: var(--box-shadow) var(--shadow-dark);
+        }
+
+        .section h2 {
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent-light);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.dark-mode .section h2 {
+            color: var(--accent-dark);
+            border-bottom-color: var(--accent-dark);
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode #hero {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        #hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-btn {
+            background: var(--accent-light);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .cta-btn:hover {
+            background: #00b394;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        body.dark-mode .cta-btn {
+            background: var(--accent-dark);
+        }
+
+        body.dark-mode .cta-btn:hover {
+            background: #00b8d4;
+        }
+
+        /* E-books Section */
+        .ebook-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .ebook-card {
+            background: var(--background-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .ebook-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        body.dark-mode .ebook-card {
+            background: var(--background-dark);
+            box-shadow: 0 4px 10px var(--shadow-dark);
+            border-color: var(--border-dark);
+        }
+
+        .ebook-cover {
+            height: 180px;
+            background: linear-gradient(45deg, #8e2de2, #4a00e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .ebook-info {
+            padding: 1rem;
+        }
+
+        .ebook-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        body.dark-mode .ebook-title {
+            color: var(--text-dark);
+        }
+
+        .ebook-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode .ebook-author {
+            color: #aaa;
+        }
+
+        .ebook-type {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .free {
+            background: #00c853;
+            color: white;
+        }
+
+        .premium {
+            background: #ffab00;
+            color: white;
+        }
+
+        /* Psychiatrists Section */
+        .psychiatrists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .psych-card {
+            background: var(--background-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .psych-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        body.dark-mode .psych-card {
+            background: var(--background-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
+            border-color: var(--border-dark);
+        }
+
+        .psych-header {
+            background: linear-gradient(45deg, var(--primary-light), var(--secondary-light));
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        body.dark-mode .psych-header {
+            background: linear-gradient(45deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        .psych-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #fff;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-light);
+        }
+
+        .psych-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .psych-specialty {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .psych-body {
+            padding: 1.5rem;
+        }
+
+        .psych-info {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .psych-info {
+            color: var(--text-dark);
+        }
+
+        .booking-btn {
+            background: var(--accent-light);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .booking-btn:hover {
+            background: #00b394;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .booking-btn {
+            background: var(--accent-dark);
+        }
+
+        body.dark-mode .booking-btn:hover {
+            background: #00b8d4;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        body.dark-mode label {
+            color: var(--text-dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius);
+            background: var(--background-light);
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        body.dark-mode input,
+        body.dark-mode textarea,
+        body.dark-mode select {
+            border-color: var(--border-dark);
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        button[type="submit"] {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        button[type="submit"]:hover {
+            background: #3a40b8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode button[type="submit"] {
+            background: var(--primary-dark);
+        }
+
+        body.dark-mode button[type="submit"]:hover {
+            background: #5a10b0;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            margin-top: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .faq-item {
+            border-color: var(--border-dark);
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            background: var(--background-light);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .faq-question {
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: var(--card-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode .faq-answer {
+            background: var(--card-dark);
+            color: var(--text-dark);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 15px 20px;
+            max-height: 500px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .developer-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--background-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+
+        body.dark-mode .developer-card {
+            background: var(--background-dark);
+            box-shadow: 0 4px 10px var(--shadow-dark);
+        }
+
+        .developer-photo {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa502);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* AI Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        body.dark-mode .chatbot-btn {
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+            box-shadow: 0 5px 15px var(--shadow-dark);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 85px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: var(--card-light);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .chat-window {
+            background: var(--card-dark);
+            box-shadow: 0 10px 30px var(--shadow-dark);
+        }
+
+        .chat-window.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.dark-mode .chat-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background: var(--background-light);
+            color: var(--text-light);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        body.dark-mode .bot-message {
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        body.dark-mode .user-message {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--border-light);
+            background: var(--card-light);
+        }
+
+        body.dark-mode .chat-input {
+            border-color: var(--border-dark);
+            background: var(--card-dark);
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid var(--border-light);
+            border-radius: 30px 0 0 30px;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        body.dark-mode .chat-input input {
+            border-color: var(--border-dark);
+        }
+
+        .chat-input button {
+            background: var(--accent-light);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        body.dark-mode .chat-input button {
+            background: var(--accent-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        body.dark-mode footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-container {
+                justify-content: flex-start;
+            }
+            
+            .chat-window {
+                width: 300px;
+                height: 400px;
+            }
+
+            .developer-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ebook-grid, .psychiatrists-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-window {
+                width: 280px;
+                right: -20px;
+            }
+            
+            .nav-container {
+                gap: 5px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1 class="en">Futuristic Librarian</h1>
+                <h1 class="bm" style="display:none;">Pustakawan Futuristik</h1>
+            </div>
+            <div class="controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+                <button class="lang-toggle" id="langToggle">
+                    <i class="fas fa-globe"></i> BM
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" data-target="hero">Home</button>
+            <button class="nav-btn" data-target="ebooks">Free eBooks</button>
+            <button class="nav-btn" data-target="premium">Premium eBooks</button>
+            <button class="nav-btn" data-target="consultation">Consultation</button>
+            <button class="nav-btn" data-target="feedback">Feedback</button>
+            <button class="nav-btn" data-target="faq">FAQ</button>
+            <button class="nav-btn" data-target="about">About</button>
+            <button class="nav-btn" data-target="privacy">Privacy Policy</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="section active" id="hero">
+            <div class="en">
+                <h1>Welcome to the Future of Reading</h1>
+                <p>Access thousands of free and premium eBooks, schedule consultations with mental health professionals, and join our knowledge community.</p>
+                <button class="cta-btn">Get Started Today</button>
+            </div>
+            <div class="bm" style="display:none;">
+                <h1>Selamat Datang ke Masa Depan Membaca</h1>
+                <p>Akses ribuan eBook percuma dan premium, jadualkan konsultasi dengan profesional kesihatan mental, dan sertai komuniti pengetahuan kami.</p>
+                <button class="cta-btn">Mulakan Hari Ini</button>
+            </div>
+        </section>
+
+        <!-- Free eBooks Section -->
+        <section class="section" id="ebooks">
+            <h2 class="en">Free eBooks</h2>
+            <h2 class="bm" style="display:none;">eBook Percuma</h2>
+            <div class="ebook-grid">
+                <!-- Free eBooks -->
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <img src="https://pin.it/2GbuPRMDW" alt="mindfull junior">
+                        <h3> class="ebook-title en">Mindfulness for Beginners</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Mindfulness untuk Pemula</h3>
+                        <p class="ebook-author en">By Dr. Sarah Johnson</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Sarah Johnson</p>
+                        <span class="ebook-type free en">FREE</span>
+                        <span class="ebook-type free bm" style="display:none;">PERCUMA</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <img src="https://pin.it/4o5GKSiEu" alt="science sleep">
+                        <h3 class="ebook-title en">The Science of Sleep</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Sains Tidur</h3>
+                        <p class="ebook-author en">By Prof. Michael Chen</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Prof. Michael Chen</p>
+                        <span class="ebook-type free en">FREE</span>
+                        <span class="ebook-type free bm" style="display:none;">PERCUMA</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <img src="https://pin.it/60uztpQFQ" alt="emotional">
+                        <h3 class="ebook-title en">Emotional Intelligence</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Kecerdasan Emosi</h3>
+                        <p class="ebook-author en">By Dr. Lisa Wong</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Lisa Wong</p>
+                        <span class="ebook-type free en">FREE</span>
+                        <span class="ebook-type free bm" style="display:none;">PERCUMA</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <img src="https://pin.it/2SPFjCogz" alt="positive">
+                        <h3 class="ebook-title en">Positive Psychology</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Psikologi Positif</h3>
+                        <p class="ebook-author en">By Dr. Robert Davis</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Robert Davis</p>
+                        <span class="ebook-type free en">FREE</span>
+                        <span class="ebook-type free bm" style="display:none;">PERCUMA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium eBooks Section -->
+        <section class="section" id="premium">
+            <h2 class="en">Premium eBooks</h2>
+            <h2 class="bm" style="display:none;">eBook Premium</h2>
+            <div class="ebook-grid">
+                <!-- Premium eBooks -->
+                <div class="ebook-card">
+                    <img src="https://pin.it/3s2cNPQSs" alt="Advanced">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <h3 class="ebook-title en">Advanced Cognitive Therapy</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Terapi Kognitif Lanjutan</h3>
+                        <p class="ebook-author en">By Dr. James Wilson</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. James Wilson</p>
+                        <span class="ebook-type premium en">PREMIUM</span>
+                        <span class="ebook-type premium bm" style="display:none;">PREMIUM</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <img src="https://pin.it/5Rci3jIkO" alt="Overcoming">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <h3 class="ebook-title en">Overcoming Anxiety</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Mengatasi Kebimbangan</h3>
+                        <p class="ebook-author en">By Dr. Emma Roberts</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Emma Roberts</p>
+                        <span class="ebook-type premium en">PREMIUM</span>
+                        <span class="ebook-type premium bm" style="display:none;">PREMIUM</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <img src="https://pin.it/7IkY9mxg0"  alt="Neuroscience">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <h3 class="ebook-title en">Neuroscience of Habits</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Neurosains Tabiat</h3>
+                        <p class="ebook-author en">By Dr. Alan Thompson</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Alan Thompson</p>
+                        <span class="ebook-type premium en">PREMIUM</span>
+                        <span class="ebook-type premium bm" style="display:none;">PREMIUM</span>
+                    </div>
+                </div>
+                
+                <div class="ebook-card">
+                    <img src="https://pin.it/43h8WsSJy" alt="trauma">
+                    <div class="ebook-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="ebook-info">
+                        <h3 class="ebook-title en">Trauma Recovery Guide</h3>
+                        <h3 class="ebook-title bm" style="display:none;">Panduan Pemulihan Trauma</h3>
+                        <p class="ebook-author en">By Dr. Maria Garcia</p>
+                        <p class="ebook-author bm" style="display:none;">Oleh Dr. Maria Garcia</p>
+                        <span class="ebook-type premium en">PREMIUM</span>
+                        <span class="ebook-type premium bm" style="display:none;">PREMIUM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Psychiatrist Consultation -->
+        <section class="section" id="consultation">
+            <h2 class="en">Book a Consultation</h2>
+            <h2 class="bm" style="display:none;">Tempah Konsultasi</h2>
+            <div class="psychiatrists-grid">
+                <!-- Psychiatrist 1 -->
+                <div class="psych-card">
+                    <div class="psych-header">
+                        <div class="psych-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="psych-name">Dr. Sarah Johnson</h3>
+                        <p class="psych-specialty en">Anxiety & Depression Specialist</p>
+                        <p class="psych-specialty bm" style="display:none;">Pakar Kebimbangan & Kemurungan</p>
+                    </div>
+                    <div class="psych-body">
+                        <div class="psych-info">
+                            <p class="en">10+ years experience in cognitive behavioral therapy</p>
+                            <p class="bm" style="display:none;">10+ tahun pengalaman dalam terapi tingkah laku kognitif</p>
+                        </div>
+                        <button class="booking-btn en">Book Session</button>
+                        <button class="booking-btn bm" style="display:none;">Tempah Sesi</button>
+                    </div>
+                </div>
+                
+                <!-- Psychiatrist 2 -->
+                <div class="psych-card">
+                    <div class="psych-header">
+                        <div class="psych-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="psych-name">Dr. Michael Chen</h3>
+                        <p class="psych-specialty en">Trauma & PTSD Specialist</p>
+                        <p class="psych-specialty bm" style="display:none;">Pakar Trauma & PTSD</p>
+                    </div>
+                    <div class="psych-body">
+                        <div class="psych-info">
+                            <p class="en">Expert in EMDR therapy and trauma recovery</p>
+                            <p class="bm" style="display:none;">Pakar dalam terapi EMDR dan pemulihan trauma</p>
+                        </div>
+                        <button class="booking-btn en">Book Session</button>
+                        <button class="booking-btn bm" style="display:none;">Tempah Sesi</button>
+                    </div>
+                </div>
+                
+                <!-- Psychiatrist 3 -->
+                <div class="psych-card">
+                    <div class="psych-header">
+                        <div class="psych-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="psych-name">Dr. James Wilson</h3>
+                        <p class="psych-specialty en">Child & Adolescent Psychiatrist</p>
+                        <p class="psych-specialty bm" style="display:none;">Psikiatri Kanak-kanak & Remaja</p>
+                    </div>
+                    <div class="psych-body">
+                        <div class="psych-info">
+                            <p class="en">Specialized in ADHD and developmental disorders</p>
+                            <p class="bm" style="display:none;">Khusus dalam ADHD dan gangguan perkembangan</p>
+                        </div>
+                        <button class="booking-btn en">Book Session</button>
+                        <button class="booking-btn bm" style="display:none;">Tempah Sesi</button>
+                    </div>
+                </div>
+                
+                <!-- Psychiatrist 4 -->
+                <div class="psych-card">
+                    <div class="psych-header">
+                        <div class="psych-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="psych-name">Dr. Emma Roberts</h3>
+                        <p class="psych-specialty en">Relationship Counselor</p>
+                        <p class="psych-specialty bm" style="display:none;">Kaunselor Hubungan</p>
+                    </div>
+                    <div class="psych-body">
+                        <div class="psych-info">
+                            <p class="en">Focuses on couples therapy and family dynamics</p>
+                            <p class="bm" style="display:none;">Memberi tumpuan pada terapi pasangan dan dinamik keluarga</p>
+                        </div>
+                        <button class="booking-btn en">Book Session</button>
+                        <button class="booking-btn bm" style="display:none;">Tempah Sesi</button>
+                    </div>
+                </div>
+                
+                <!-- Psychiatrist 5 -->
+                <div class="psych-card">
+                    <div class="psych-header">
+                        <div class="psych-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="psych-name">Dr. David Miller</h3>
+                        <p class="psych-specialty en">Addiction Specialist</p>
+                        <p class="psych-specialty bm" style="display:none;">Pakar Ketagihan</p>
+                    </div>
+                    <div class="psych-body">
+                        <div class="psych-info">
+                            <p class="en">Expert in substance abuse and behavioral addictions</p>
+                            <p class="bm" style="display:none;">Pakar dalam penyalahgunaan bahan dan ketagihan tingkah laku</p>
+                        </div>
+                        <button class="booking-btn en">Book Session</button>
+                        <button class="booking-btn bm" style="display:none;">Tempah Sesi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Form -->
+        <section class="section" id="feedback">
+            <h2 class="en">Feedback Form</h2>
+            <h2 class="bm" style="display:none;">Borang Maklum Balas</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name" class="en">Name</label>
+                    <label for="name" class="bm" style="display:none;">Nama</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="en">Email</label>
+                    <label for="email" class="bm" style="display:none;">Emel</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedbackType" class="en">Feedback Type</label>
+                    <label for="feedbackType" class="bm" style="display:none;">Jenis Maklum Balas</label>
+                    <select id="feedbackType" required>
+                        <option value="" class="en">Select type</option>
+                        <option value="" class="bm" style="display:none;">Pilih jenis</option>
+                        <option value="suggestion" class="en">Suggestion</option>
+                        <option value="suggestion" class="bm" style="display:none;">Cadangan</option>
+                        <option value="complaint" class="en">Complaint</option>
+                        <option value="complaint" class="bm" style="display:none;">Aduan</option>
+                        <option value="praise" class="en">Praise</option>
+                        <option value="praise" class="bm" style="display:none;">Pujian</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="en">Message</label>
+                    <label for="message" class="bm" style="display:none;">Mesej</label>
+                    <textarea id="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="en">Submit Feedback</button>
+                <button type="submit" class="bm" style="display:none;">Hantar Maklum Balas</button>
+            </form>
+        </section>
+
+        <!-- FAQs -->
+        <section class="section" id="faq">
+            <h2 class="en">Frequently Asked Questions</h2>
+            <h2 class="bm" style="display:none;">Soalan Lazim</h2>
+            <div class="faq-container">
+                <!-- FAQ 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="en">How do I access premium eBooks?</span>
+                        <span class="bm" style="display:none;">Bagaimana saya mengakses eBook premium?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="en">Premium eBooks can be accessed after purchasing a subscription plan. Go to the Premium section to view available plans.</p>
+                        <p class="bm" style="display:none;">eBook premium boleh diakses setelah membeli pelan langganan. Pergi ke bahagian Premium untuk melihat pelan yang tersedia.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="en">How long are consultation sessions?</span>
+                        <span class="bm" style="display:none;">Berapa lamakah sesi konsultasi?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="en">Standard sessions are 50 minutes. Extended 80-minute sessions are available for an additional fee.</p>
+                        <p class="bm" style="display:none;">Sesi standard adalah 50 minit. Sesi lanjutan 80 minit boleh didapati dengan bayaran tambahan.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="en">Can I cancel my booking?</span>
+                        <span class="bm" style="display:none;">Bolehkah saya membatalkan tempahan saya?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="en">Yes, you can cancel up to 24 hours before your appointment for a full refund.</p>
+                        <p class="bm" style="display:none;">Ya, anda boleh membatalkan sehingga 24 jam sebelum temujanji anda untuk bayaran balik penuh.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="en">Are my sessions confidential?</span>
+                        <span class="bm" style="display:none;">Adakah sesi saya sulit?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="en">Yes, all sessions are completely confidential in accordance with professional ethics and privacy laws.</p>
+                        <p class="bm" style="display:none;">Ya, semua sesi adalah sepenuhnya sulit mengikut etika profesional dan undang-undang privasi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <h2 class="en">About Futuristic Librarian</h2>
+            <h2 class="bm" style="display:none;">Mengenai Pustakawan Futuristik</h2>
+            <div class="about-content">
+                <p class="en">
+                    Futuristic Librarian is a digital platform that provides access to a vast collection of mental health resources, 
+                    including free and premium eBooks, online consultations with certified psychiatrists, and educational materials. 
+                    Our mission is to make mental health resources accessible to everyone, everywhere.
+                </p>
+                <p class="bm" style="display:none;">
+                    Pustakawan Futuristik adalah platform digital yang menyediakan akses kepada koleksi besar sumber kesihatan mental, 
+                    termasuk eBook percuma dan premium, konsultasi dalam talian dengan psikiatri bertauliah, dan bahan pendidikan. 
+                    Misi kami adalah untuk menjadikan sumber kesihatan mental boleh diakses oleh semua orang, di mana sahaja.
+                </p>
+                
+                <h3 class="en">About the Developer</h3>
+                <h3 class="bm" style="display:none;">Mengenai Pembangun</h3>
+                
+                <div class="developer-card">
+                    <div class="developer-photo">
+                        <img src="/image/developer pic.jpg" alt="developer photo" style="width:128px;height:128px;">
+                    </div>
+                    <div class="developer-info">
+                        <p class="en">
+                            The Futuristic Librarian was developed by a team of passionate developers and mental health advocates. 
+                            Our lead developer has over 10 years of experience in creating digital health solutions.
+                        </p>
+                        <p class="bm" style="display:none;">
+                            Pustakawan Futuristik dibangunkan oleh pasukan pembangun yang bersemangat dan penyokong kesihatan mental. 
+                            Ketua pembangun kami mempunyai lebih 10 tahun pengalaman dalam mencipta penyelesaian kesihatan digital.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rules and Privacy Policy -->
+        <section class="section" id="privacy">
+            <h2 class="en">Privacy Policy & Terms</h2>
+            <h2 class="bm" style="display:none;">Dasar Privasi & Terma</h2>
+            <div class="en">
+                <h3>Privacy Policy</h3>
+                <p>We are committed to protecting your privacy. All personal information collected is used solely for the purpose of providing our services and is never shared with third parties without your explicit consent.</p>
+                
+                <h3>Terms of Service</h3>
+                <p>By using our platform, you agree to our terms of service. All content is for educational purposes only and does not replace professional medical advice. Consultations are provided by licensed professionals.</p>
+                
+                <h3>Copyright Notice</h3>
+                <p>All eBooks and resources are protected by copyright law. Unauthorized distribution or reproduction is strictly prohibited.</p>
+            </div>
+            <div class="bm" style="display:none;">
+                <h3>Dasar Privasi</h3>
+                <p>Kami komited untuk melindungi privasi anda. Semua maklumat peribadi yang dikumpul digunakan semata-mata untuk tujuan menyediakan perkhidmatan kami dan tidak pernah dikongsi dengan pihak ketiga tanpa persetujuan eksplisit anda.</p>
+                
+                <h3>Syarat Perkhidmatan</h3>
+                <p>Dengan menggunakan platform kami, anda bersetuju dengan syarat perkhidmatan kami. Semua kandungan adalah untuk tujuan pendidikan sahaja dan tidak menggantikan nasihat perubatan profesional. Konsultasi disediakan oleh profesional berlesen.</p>
+                
+                <h3>Notis Hak Cipta</h3>
+                <p>Semua eBook dan sumber dilindungi oleh undang-undang hak cipta. Pengedaran atau pembiakan tanpa kebenaran adalah dilarang sama sekali.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-btn" id="chatbotBtn">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <i class="fas fa-robot"></i>
+                <h3 class="en">Futuristic Librarian AI</h3>
+                <h3 class="bm" style="display:none;">AI Pustakawan Futuristik</h3>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot-message">
+                    <span class="en">Hello! I'm your futuristic librarian assistant. How can I help you today? 😊</span>
+                    <span class="bm" style="display:none;">Helo! Saya pembantu pustakawan futuristik anda. Bagaimana saya boleh membantu anda hari ini? 😊</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message...">
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="en">Quick Links</h3>
+                <h3 class="bm" style="display:none;">Pautan Pantas</h3>
+                <ul class="footer-links">
+                    <li><a href="#ebooks" class="en">Free eBooks</a><a href="#ebooks" class="bm" style="display:none;">eBook Percuma</a></li>
+                    <li><a href="#premium" class="en">Premium eBooks</a><a href="#premium" class="bm" style="display:none;">eBook Premium</a></li>
+                    <li><a href="#consultation" class="en">Book Consultation</a><a href="#consultation" class="bm" style="display:none;">Tempah Konsultasi</a></li>
+                    <li><a href="#feedback" class="en">Feedback</a><a href="#feedback" class="bm" style="display:none;">Maklum Balas</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="en">Resources</h3>
+                <h3 class="bm" style="display:none;">Sumber</h3>
+                <ul class="footer-links">
+                    <li><a href="#faq" class="en">FAQs</a><a href="#faq" class="bm" style="display:none;">Soalan Lazim</a></li>
+                    <li><a href="#about" class="en">About Us</a><a href="#about" class="bm" style="display:none;">Tentang Kami</a></li>
+                    <li><a href="#privacy" class="en">Privacy Policy</a><a href="#privacy" class="bm" style="display:none;">Dasar Privasi</a></li>
+                    <li><a href="#" class="en">Blog</a><a href="#" class="bm" style="display:none;">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="en">Contact Us</h3>
+                <h3 class="bm" style="display:none;">Hubungi Kami</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> info@futuristiclibrarian.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Digital Hub, Cyberjaya, Malaysia</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p class="en">&copy; 2023 Futuristic Librarian. All rights reserved.</p>
+            <p class="bm" style="display:none;">&copy; 2023 Pustakawan Futuristik. Hak cipta terpelihara.</p>
+        </div>
+    </footer>
+
+    <script src="my.js"></script>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
+            
+            // Save preference to localStorage
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        }
+        
+        // Language Toggle
+        const langToggle = document.getElementById('langToggle');
+        
+        langToggle.addEventListener('click', () => {
+            const enElements = document.querySelectorAll('.en');
+            const bmElements = document.querySelectorAll('.bm');
+            
+            enElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            bmElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            if (langToggle.textContent.includes('BM')) {
+                langToggle.innerHTML = '<i class="fas fa-globe"></i> EN';
+            } else {
+                langToggle.innerHTML = '<i class="fas fa-globe"></i> BM';
+            }
+            
+            // Save language preference
+            localStorage.setItem('language', langToggle.textContent.includes('EN') ? 'en' : 'bm');
+        });
+        
+        // Check for saved language preference
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage === 'bm') {
+            langToggle.click(); // Toggle to BM if saved
+        }
+        
+        // Navigation Functionality
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+        
+        // Function to show a specific section
+        function showSection(sectionId) {
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Add active class to the clicked button
+                const activeButton = document.querySelector(`.nav-btn[data-target="${sectionId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+                
+                // Scroll to the section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Add click event to navigation buttons
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const target = button.getAttribute('data-target');
+                showSection(target);
+            });
+        });
+        
+        // Chatbot Functionality
+        const chatbotBtn = document.getElementById('chatbotBtn');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatBody = document.getElementById('chatBody');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        
+        chatbotBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('active');
+        });
+        
+        // Predefined bot responses
+        const botResponses = {
+            en: {
+                greeting: "Hello! I'm your futuristic librarian assistant. How can I help you today? 😊",
+                help: "I can help you with: <br>1. Finding eBooks 📚<br>2. Booking consultations 🗓️<br>3. Answering questions ❓<br>Just ask me anything!",
+                feedback: "Thank you for your feedback! We're always looking to improve. Is there anything specific you'd like to share?",
+                thanks: "You're welcome! 😊 Let me know if you need anything else.",
+                goodbye: "Thank you for using Futuristic Librarian! Have a great day! 🌟",
+                default: "I'm still learning! For now, I can help you find eBooks, book consultations, or answer basic questions. 😊"
+            },
+            bm: {
+                greeting: "Helo! Saya pembantu pustakawan futuristik anda. Bagaimana saya boleh membantu anda hari ini? 😊",
+                help: "Saya boleh membantu anda dengan: <br>1. Mencari eBook 📚<br>2. Menempah konsultasi 🗓️<br>3. Menjawab soalan ❓<br>Tanya saya apa sahaja!",
+                feedback: "Terima kasih atas maklum balas anda! Kami sentiasa berusaha untuk memperbaiki. Ada sesuatu yang khusus yang anda ingin kongsi?",
+                thanks: "Sama-sama! 😊 Beritahu saya jika anda memerlukan apa-apa lagi.",
+                goodbye: "Terima kasih kerana menggunakan Pustakawan Futuristik! Semoga hari anda indah! 🌟",
+                default: "Saya masih belajar! Buat masa ini, saya boleh membantu anda mencari eBook, menempah konsultasi, atau menjawab soalan asas. 😊"
+            }
+        };
+        
+        // Get current language
+        function getCurrentLanguage() {
+            return document.querySelector('.en').style.display === 'none' ? 'bm' : 'en';
+        }
+        
+        // Add message to chat
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            
+            const lang = getCurrentLanguage();
+            const span = document.createElement('span');
+            span.className = lang;
+            span.innerHTML = message;
+            
+            if (lang === 'bm') {
+                const enSpan = document.createElement('span');
+                enSpan.className = 'en';
+                enSpan.style.display = 'none';
+                enSpan.innerHTML = message;
+                messageDiv.appendChild(enSpan);
+            }
+            
+            messageDiv.appendChild(span);
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+        
+        // Process user input
+        function processUserInput() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+            
+            addMessage(message, true);
+            userInput.value = '';
+            
+            // Simulate AI thinking
+            setTimeout(() => {
+                const lang = getCurrentLanguage();
+                const responses = botResponses[lang];
+                
+                if (message.toLowerCase().includes('help') || message.toLowerCase().includes('bantu')) {
+                    addMessage(responses.help);
+                } else if (message.toLowerCase().includes('feedback') || message.toLowerCase().includes('maklum balas')) {
+                    addMessage(responses.feedback);
+                } else if (message.toLowerCase().includes('thank') || message.toLowerCase().includes('terima kasih')) {
+                    addMessage(responses.thanks);
+                } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('selamat tinggal')) {
+                    addMessage(responses.goodbye);
+                } else {
+                    addMessage(responses.default);
+                }
+            }, 1000);
+        }
+        
+        sendBtn.addEventListener('click', processUserInput);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                processUserInput();
+            }
+        });
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Form submission
+        const feedbackForm = document.getElementById('feedbackForm');
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your feedback! We appreciate your input.');
+            feedbackForm.reset();
+        });
+        
+        // Initialize the page with the hero section active
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('hero');
+        });
+    </script>
+</body>
+</html>
